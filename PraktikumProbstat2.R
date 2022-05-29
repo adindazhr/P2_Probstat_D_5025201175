@@ -1,14 +1,14 @@
-#1. Seorang peneliti melakukan penelitian mengenai pengaruh aktivitas ???? terhadap
+#1. Seorang peneliti melakukan penelitian mengenai pengaruh aktivitas 𝐴 terhadap
 #kadar saturasi oksigen pada manusia. Peneliti tersebut mengambil sampel
-#sebanyak 9 responden. Pertama, sebelum melakukan aktivitas ????, peneliti mencatat
+#sebanyak 9 responden. Pertama, sebelum melakukan aktivitas 𝐴, peneliti mencatat
 #kadar saturasi oksigen dari 9 responden tersebut. Kemudian, 9 responden tersebut
-#diminta melakukan aktivitas ????. Setelah 15 menit, peneliti tersebut mencatat kembali
+#diminta melakukan aktivitas 𝐴. Setelah 15 menit, peneliti tersebut mencatat kembali
 #kadar saturasi oksigen dari 9 responden tersebut. Berikut data dari 9 responden
-#mengenai kadar saturasi oksigen sebelum dan sesudah melakukan aktivitas ????
+#mengenai kadar saturasi oksigen sebelum dan sesudah melakukan aktivitas 𝐴
 
 #Berdasarkan data pada tabel diatas, diketahui kadar saturasi oksigen dari
-#responden ke-3 ketika belum melakukan aktivitas ???? sebanyak 67, dan setelah
-#melakukan aktivitas ???? sebanyak 70.
+#responden ke-3 ketika belum melakukan aktivitas 𝐴 sebanyak 67, dan setelah
+#melakukan aktivitas 𝐴 sebanyak 70.
 
 #a. Carilah Standar Deviasi dari data selisih pasangan pengamatan tabel diatas
 
@@ -24,9 +24,9 @@
 
 #c. tentukanlah apakah terdapat pengaruh yang signifikan secara statistika
 #dalam hal kadar saturasi oksigen , sebelum dan sesudah melakukan
-#aktivitas ???? jika diketahui tingkat signifikansi ???? = 5% serta H0 : "tidak ada
+#aktivitas 𝐴 jika diketahui tingkat signifikansi 𝛼 = 5% serta H0 : “tidak ada
 #pengaruh yang signifikan secara statistika dalam hal kadar saturasi
-#oksigen , sebelum dan sesudah melakukan aktivitas ????"
+#oksigen , sebelum dan sesudah melakukan aktivitas 𝐴”
 
   qt(p = 0.025, df = 8, lower.tail = FALSE)
 
@@ -65,12 +65,12 @@
 
 #Dari data diatas berilah keputusan serta kesimpulan yang didapatkan dari hasil
 #diatas. Asumsikan nilai variancenya sama, apakah ada perbedaan pada
-#rata-ratanya (??= 0.05)? Buatlah :
+#rata-ratanya (α= 0.05)? Buatlah :
 
 #3a. H0 dan H1
 
-  #H0: ?? Bali = ?? Bandung
-  #H1: ?? Bali ??? ?? Bandung
+  #H0: μ Bali = μ Bandung
+  #H1: μ Bali ≠ μ Bandung
 
 #3b. Hitung sample statistik
 
@@ -93,7 +93,7 @@
 
 #3e. Keputusan
 
-  #Hasil uji terletak di interval nilai kritikal, maka H0 tidak ditolak/sample tidak memiliki cukup bukti yang bertentangan dengan H0.
+  #Kita menerima h0 atau kita menolak h1, dikarenakan hasil uji statistik terletak di selang nilai kritikal.
 
 #3f. Kesimpulan
   
@@ -129,7 +129,7 @@
 #c. Untuk uji ANOVA (satu arah), buatlah model linier dengan Panjang versus
 #Grup dan beri nama model tersebut model 1.
 
-  Model1 <- lm(formula = Group ~ Length, data = df4)
+  Model1 <- lm(formula = Length ~ Group, data = df4)
   print(Model1)
 
 #D. Dari Hasil Poin C, Berapakah nilai-p ? , Apa yang dapat Anda simpulkan dari H0?
@@ -139,8 +139,14 @@
 #E. Verifikasilah jawaban model 1 dengan Post-hoc test Tukey HSD, dari nilai p
 #yang didapatkan apakah satu jenis kucing lebih panjang dari yang lain?
 
-  tukey <- TukeyHSD(Model1)
-  print(tukey)
+  
+  library(multcomp)
+  post.hoc <- glht(Model1, linfct = mcp(Group = 'Tukey'))
+  summary(post.hoc)
+  
+#f
+  ggplot(data = df4, mapping = aes(x = Group, y = Length)) +
+    geom_point()
 
 #5 Data yang digunakan merupakan hasil eksperimen yang dilakukan untuk mengetahui pengaruh suhu
 #operasi (100??C, 125??C dan 150??C) dan tiga jenis kaca pelat muka (A, B dan C) pada keluaran 
